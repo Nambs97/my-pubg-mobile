@@ -1,0 +1,24 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "BackEnd folder for Ingenosya test",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "user",
+    "management"
+  ],
+  "author": "Rarivoson Andrianambinintsoa",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.3",
+    "selenium-webdriver": "*"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
