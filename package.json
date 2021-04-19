@@ -2,13 +2,16 @@
   "name": "api",
   "version": "1.0.0",
   "description": "BackEnd folder for Ingenosya test",
+  "engines": {
+    "node": "14.15.0"
+  },
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "user",
-    "management"
+    "pubg",
+    "uc"
   ],
   "author": "Rarivoson Andrianambinintsoa",
   "license": "ISC",
