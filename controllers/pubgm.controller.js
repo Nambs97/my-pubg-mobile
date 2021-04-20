@@ -56,8 +56,10 @@ async function getPlayerIGN(playerID) {
 
   try {
     //await driver.wait(webdriver.until.titleMatches(/BrowserStack/i), 5000);
-    console.log("Getting " + playerID + "'s nickname in process...");
+    //console.log("Getting " + playerID + "'s nickname in process...");
+    await driver.manage().setTimeouts( { implicit: 1000 } );
     const el_playerIGN = await driver.findElement(webdriver.By.xpath('/html/body/div[1]/div[2]/div[2]/div[1]/div[3]/div/div/div/div/div[1]/div[1]/p'));
+    //const el_playerIGN = await driver.wait(until.elementLocated(By.xpath('/html/body/div[1]/div[2]/div[2]/div[1]/div[3]/div/div/div/div/div[1]/div[1]/p')));
     const playerIGN = el_playerIGN.getText();
     /*playerIGN.then((nickname) => {
         console.log(nickname);
@@ -66,14 +68,15 @@ async function getPlayerIGN(playerID) {
     await driver.executeScript(
       'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed","reason": "Player Nickname retrieved successfully!"}}'
     );
+    await driver.quit();
     return playerIGN;
   } catch (e) {
     await driver.executeScript(
       'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "Player Nickname not load in time"}}'
     );
     console.log('Getting nickname failed');
+    await driver.quit();
   }
-  await driver.quit();
 }
 
 exports.getPlayerIGN = getPlayerIGN;
