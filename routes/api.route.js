@@ -14,7 +14,7 @@ router.post('/pubgmobile', bodyParser, function(req, res, next){
     console.log('Request : ' + JSON.stringify(req.body));
     PUBGm.getPlayerIGN(req.body.playerID).then((playerIGN) => {
         res.send({'playerID': req.body.playerID, 'playerIGN': playerIGN});
-        console.log({'playerID': req.body.playerID, 'playerIGN': playerIGN});
+        console.log('Response : ' + JSON.stringify({'playerID': req.body.playerID, 'playerIGN': playerIGN}));
     });
 });
 

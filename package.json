@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "BackEnd folder for Ingenosya test",
+  "description": "PUBG Mobile API for LCDP Gaming Store",
   "engines": {
     "node": "14.15.0"
   },
@@ -18,7 +18,6 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "mongoose": "^5.12.3",
     "selenium-webdriver": "*"
   },
   "devDependencies": {

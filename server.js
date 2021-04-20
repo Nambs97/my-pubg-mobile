@@ -1,15 +1,8 @@
 const express = require('express');
-const mongoose = require('mongoose');
 
 
 //Set up Express App
 const app = express();
-
-//Connect to MongoDb
-mongoose.connect('mongodb://localhost:27017/ingenosya', {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.Promise = global.Promise;
-
-//app.use(express.static('public'));
 
 app.use(express.json());
 
