@@ -12,7 +12,7 @@ router.get('/',function(req, res) {
 //POST : Get PUBG Mobile Nickname from Midasbuy website
 router.post('/pubgmobile', bodyParser, function(req, res, next){
     console.log('Request : ' + JSON.stringify(req.body));
-    PUBGm.getPlayerIGN(req.body.playerID).then((playerIGN) => {
+    PUBGm.getPlayerIGN(req.body.remoteServer, req.body.playerID).then((playerIGN) => {
         res.send({'playerID': req.body.playerID, 'playerIGN': playerIGN});
         console.log('Response : ' + JSON.stringify({'playerID': req.body.playerID, 'playerIGN': playerIGN}));
     });
