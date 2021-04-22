@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
 router.get('/verify', (req, res) => {
 
     // Your verify token. Should be a random string.
-    let VERIFY_TOKEN = "lcdpgamingstore"
+    let VERIFY_TOKEN = "EAAECefS246YBANKzQaGhMvYYdaycy9TNFy5YIwfPcU4W03QbEZCT3iPgRD5lvsGgZAZBZABlnESA20SkbLYZA0AuJfQFMJwLWNZBkQCtoHNKd5yZCXkicbiZBdFiPMruuqW0RZBzGsHFa17xoSWew8foEjpXfn1Pf8CfkHm5X8ZAF5H3uEza5YwH2t"
       
     // Parse the query params
     let mode = req.query['hub.mode'];
