@@ -9,6 +9,7 @@ app.use(express.json());
 
 //Initialize routes
 app.use('/api', require('./routes/api.route'));
+app.use('/webhook', require('./routes/webhook.route'));
 
 //Error handling middleware
 app.use(function(err, req, res, next) {
