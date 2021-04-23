@@ -9,7 +9,7 @@ router.get('/',function(req, res) {
     res.send('Welcome to LCDP Gaming Store Webhook !');
 });
 
-router.post('/', (req, res) => {
+router.post('/verify', (req, res) => {
     let body = req.body;
   
     // Checks if this is an event from a page subscription
