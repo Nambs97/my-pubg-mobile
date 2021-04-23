@@ -68,7 +68,13 @@ function handleMessage(senderPsid, receivedMessage) {
   
     // The page access token we have generated in your app settings
     const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN || "EAAECefS246YBANKzQaGhMvYYdaycy9TNFy5YIwfPcU4W03QbEZCT3iPgRD5lvsGgZAZBZABlnESA20SkbLYZA0AuJfQFMJwLWNZBkQCtoHNKd5yZCXkicbiZBdFiPMruuqW0RZBzGsHFa17xoSWew8foEjpXfn1Pf8CfkHm5X8ZAF5H3uEza5YwH2t";
-  
+    const options = {
+        hostname: 'graph.facebook.com',
+        port: 443,
+        path: '/v2.6/me/messages?access_token='+PAGE_ACCESS_TOKEN,
+        method: 'POST'
+    }
+
     // Construct the message body
     let requestBody = {
       'recipient': {
@@ -78,12 +84,7 @@ function handleMessage(senderPsid, receivedMessage) {
     };
   
     // Send the HTTP request to the Messenger Platform
-    https.request({
-      'uri': 'https://graph.facebook.com/v2.6/me/messages',
-      'qs': { 'access_token': PAGE_ACCESS_TOKEN },
-      'method': 'POST',
-      'json': requestBody
-    }, (err, _res, _body) => {
+    https.request(options, (err, _res, _body) => {
       if (!err) {
         console.log('Message sent!');
       } else {
