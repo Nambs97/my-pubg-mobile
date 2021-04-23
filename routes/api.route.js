@@ -1,3 +1,4 @@
+//{SERVER}/api
 const bodyParser = require('body-parser').json();
 const express = require('express');
 const router = express.Router();
