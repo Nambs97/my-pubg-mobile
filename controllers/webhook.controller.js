@@ -1,5 +1,6 @@
 const https = require('https');
 const axios = require('axios');
+require('dotenv').config();
 
 // Handles messages events
 function handleMessage(senderPsid, receivedMessage) {
@@ -68,7 +69,7 @@ function handleMessage(senderPsid, receivedMessage) {
   function callSendAPI(senderPsid, response) {
   
     // The page access token we have generated in your app settings
-    const PAGE_ACCESS_TOKEN = 'EAAECefS246YBANKzQaGhMvYYdaycy9TNFy5YIwfPcU4W03QbEZCT3iPgRD5lvsGgZAZBZABlnESA20SkbLYZA0AuJfQFMJwLWNZBkQCtoHNKd5yZCXkicbiZBdFiPMruuqW0RZBzGsHFa17xoSWew8foEjpXfn1Pf8CfkHm5X8ZAF5H3uEza5YwH2t';
+    const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
     const options = {
         hostname: 'graph.facebook.com',
         port: 443,
