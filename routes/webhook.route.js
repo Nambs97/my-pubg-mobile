@@ -3,6 +3,7 @@ const bodyParser = require('body-parser').json();
 const express = require('express');
 const router = express.Router();
 const Webhook = require('../controllers/webhook.controller');
+require('dotenv').config();
 
 //GET : Webhook Welcome Message
 router.get('/',function(req, res) {
@@ -25,14 +26,20 @@ router.post('/verify', (req, res) => {
         // Get the sender PSID
         let senderPsid = webhookEvent.sender.id;
         console.log('Sender PSID: ' + senderPsid);
-  
-        // Check if the event is a message or postback and
-        // pass the event to the appropriate handler function
-        if (webhookEvent.message) {
-            Webhook.handleMessage(senderPsid, webhookEvent.message);
-        } else if (webhookEvent.postback) {
-            Webhook.handlePostback(senderPsid, webhookEvent.postback);
-        }
+        Webhook.getUserProfile(senderPsid).then(senderProfile => {
+          console.log('EXTERNAL ROUTE : ' + JSON.stringify(senderProfile));
+          // Check if the event is a message or postback and
+          // pass the event to the appropriate handler function
+          if (webhookEvent.message) {
+            Webhook.handleMessage(senderProfile, webhookEvent.message);
+          } else if (webhookEvent.postback) {
+            if (webhookEvent.postback.payload === 'get_started') {
+              Webhook.startConversation(senderProfile);
+            } else {
+              Webhook.handlePostback(senderProfile, webhookEvent.postback);
+            }
+          }
+        });
       });
   
       // Returns a '200 OK' response to all requests
@@ -48,7 +55,7 @@ router.post('/verify', (req, res) => {
 router.get('/verify', (req, res) => {
 
     // Your verify token. Should be a random string.
-    let VERIFY_TOKEN = "EAAECefS246YBANKzQaGhMvYYdaycy9TNFy5YIwfPcU4W03QbEZCT3iPgRD5lvsGgZAZBZABlnESA20SkbLYZA0AuJfQFMJwLWNZBkQCtoHNKd5yZCXkicbiZBdFiPMruuqW0RZBzGsHFa17xoSWew8foEjpXfn1Pf8CfkHm5X8ZAF5H3uEza5YwH2t"
+    let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
       
     // Parse the query params
     let mode = req.query['hub.mode'];
