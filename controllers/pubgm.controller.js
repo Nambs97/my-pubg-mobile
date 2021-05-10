@@ -1,4 +1,6 @@
 const webdriver = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
+const chromedriver = require('chromedriver');
 
 const browserStackParams = {
   USERNAME : 'rarivosonandrian1',
@@ -11,6 +13,12 @@ const lambdaTestParams = {
   KEY : 'K7Ht2ltj2NSOnyjftkiYNcTAbekBRIYMolsBUhVZqW5O7i1V6b',
   GRID_HOST : 'hub.lambdatest.com/wd/hub'
 };
+
+// Local Chrome Options
+var chromeOptions = new chrome.Options();
+  chromeOptions.addArguments(["--headless"]);
+  chromeOptions.addArguments(["--no-sandbox"]);
+  chromeOptions.addArguments(["--disable-gpu"]);
 
 // BrowserStack Capabilities
 const bsCapabilities = {
@@ -39,9 +47,9 @@ const ltCapabilities = {
 
 async function getPlayerIGN(remoteServerParam, playerID) {
   //Default value of remoteServer parameters
-  let serverParams = lambdaTestParams;
-  let genCapabilities = ltCapabilities;
-  let remoteServer = 'lambdatest';
+  let serverParams = '';
+  let genCapabilities = chromeOptions;
+  let remoteServer = 'localchrome';
   //console.log(">>>REMOTE 0: " + remoteServer);
   //console.log(">>>PARAM 0: " + JSON.stringify(serverParams));
   //console.log(">>>REMOTE 1: " + remoteServer + '/' + remoteServerParam);
@@ -61,13 +69,15 @@ async function getPlayerIGN(remoteServerParam, playerID) {
   //console.log(">>>PARAM 1: " + JSON.stringify(serverParams));
   // URL: https://{username}:{accessKey}@hub.lambdatest.com/wd/hub
   //const gridUrl = 'http://' + USERNAME + ':' + KEY + '@' + GRID_HOST;
-  const gridUrl = 'http://' + serverParams.USERNAME + ':' + serverParams.KEY + '@' + serverParams.GRID_HOST;
-  const capabilities = genCapabilities;
+  /*const gridUrl = 'http://' + serverParams.USERNAME + ':' + serverParams.KEY + '@' + serverParams.GRID_HOST;
+  const capabilities = genCapabilities;*/
   //console.log(">>>CAP 0: " + JSON.stringify(capabilities));
   //console.log(">>>REMOTE URL 0: " + gridUrl);
 
   //Process if remoteServer is BrowserStack
   if (remoteServer == 'browserstack') {
+    const gridUrl = 'http://' + serverParams.USERNAME + ':' + serverParams.KEY + '@' + serverParams.GRID_HOST;
+    const capabilities = genCapabilities;
     let driver = new webdriver.Builder()
       .usingServer(gridUrl)
       .withCapabilities({
@@ -103,6 +113,8 @@ async function getPlayerIGN(remoteServerParam, playerID) {
     }
   //Process if remoteServer is LambdaTest
   } else if (remoteServer == 'lambdatest') {
+    const gridUrl = 'http://' + serverParams.USERNAME + ':' + serverParams.KEY + '@' + serverParams.GRID_HOST;
+    const capabilities = genCapabilities;
     const driver = new webdriver.Builder()
         .usingServer(gridUrl)
         .withCapabilities(capabilities)
@@ -128,6 +140,38 @@ async function getPlayerIGN(remoteServerParam, playerID) {
       console.log('Getting nickname failed');
       await driver.quit();
     }
+  } else {
+    const driver = new webdriver.Builder()
+    .forBrowser('chrome')
+    //.setChromeOptions(new chrome.Options().headless().windowSize(screen))
+    .setChromeOptions(chromeOptions)
+    .build();
+
+    await driver.get("https://www.midasbuy.com/midasbuy/ot/buy/pubgm");
+    const playerIDField = await driver.findElement(webdriver.By.xpath('/html/body/div[1]/div[2]/div[2]/div[1]/div[3]/div/div/div/div/div[1]/input'));
+    const okButton = await driver.findElement(webdriver.By.xpath('/html/body/div[1]/div[2]/div[2]/div[1]/div[3]/div/div/div/div/div[2]'));
+    await playerIDField.sendKeys(playerID); // this submits on desktop browsers
+    await driver.manage().setTimeouts( { implicit: 750 } );
+    await okButton.click();
+
+    try {
+      console.log("Getting " + playerID + "'s nickname in process...");
+      await driver.manage().setTimeouts( { implicit: 2000 } );
+      console.log('Trying to get IGN Field...')
+      const el_playerIGN = await driver.findElement(webdriver.By.xpath('/html/body/div[1]/div[2]/div[2]/div[1]/div[3]/div/div/div/div/div[1]/div[1]/p'));
+      if (el_playerIGN) { console.log('IGN Field found !') }
+      const playerIGN = el_playerIGN.getText();
+      console.log('Getting nickname success');
+      playerIGN.then(() => {
+        driver.quit();
+      })
+      return playerIGN;
+      
+    } catch (e) {
+      console.log('Getting nickname failed');
+      await driver.quit();
+    }
+
   }
 }
 
