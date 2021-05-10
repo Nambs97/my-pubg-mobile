@@ -50,9 +50,7 @@ async function getPlayerIGN(remoteServerParam, playerID) {
   let serverParams = '';
   let genCapabilities = chromeOptions;
   let remoteServer = 'localchrome';
-  //console.log(">>>REMOTE 0: " + remoteServer);
-  //console.log(">>>PARAM 0: " + JSON.stringify(serverParams));
-  //console.log(">>>REMOTE 1: " + remoteServer + '/' + remoteServerParam);
+  
   if (remoteServerParam == 'browserstack' || remoteServerParam == 'lambdatest') {
     remoteServer = remoteServerParam;
     //console.log(">>>REMOTE 2: " + remoteServer + '/' + remoteServerParam);
@@ -65,14 +63,6 @@ async function getPlayerIGN(remoteServerParam, playerID) {
     serverParams = lambdaTestParams;
     genCapabilities = ltCapabilities;
   }
-
-  //console.log(">>>PARAM 1: " + JSON.stringify(serverParams));
-  // URL: https://{username}:{accessKey}@hub.lambdatest.com/wd/hub
-  //const gridUrl = 'http://' + USERNAME + ':' + KEY + '@' + GRID_HOST;
-  /*const gridUrl = 'http://' + serverParams.USERNAME + ':' + serverParams.KEY + '@' + serverParams.GRID_HOST;
-  const capabilities = genCapabilities;*/
-  //console.log(">>>CAP 0: " + JSON.stringify(capabilities));
-  //console.log(">>>REMOTE URL 0: " + gridUrl);
 
   //Process if remoteServer is BrowserStack
   if (remoteServer == 'browserstack') {
