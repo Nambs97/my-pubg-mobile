@@ -1,75 +1,92 @@
 {
-    "profile": {
-      "greeting": "Bienvenue sur LCDP Gaming Store {{userFirstName}} ! Achète vite tes Unknown Cash (UC) PUBG Mobile chez nous à des prix imbattables !"
-    },
-    "menu": {
-      "support": "Service clientèle",
-      "order": "Mises à jour des commandes",
-      "help": "Parler à un agent",
-      "suggestion": "Suggestions vestimentaires",
-      "shop": "Acheter maintenant",
-      "start_over": "Recommencer"
-    },
-    "get_started": {
-      "welcome": "Bonjour {{userFirstName}}, je suis LCDPシProfesseur et je vends des UC si cela t’intéresse. {{sunglasses}}",
-      "guidance": "À tout moment, utilisez le menu ci-dessous pour parcourir les fonctionnalités",
-      "help": "Comment pouvons-nous vous aider aujourd’hui ?",
-      "want_to_buy": "Souhaites-tu acheter des UC pour ton compte PUBG Mobile (Global) ?"
-    },
-    "leadgen": {
-      "promo": "Salut {{userFirstName}}, trouver de supers tenues est désormais plus facile et plus pratique.",
-      "title": "Coupon de 50 %",
-      "subtitle": "Voici votre coupon",
-      "apply": "Appliquer la remise",
-      "coupon": "Votre coupon a été ajouté à la conversation, vous pouvez maintenant découvrir la collection été soldée"
-    },
-    "curation": {
-      "prompt": "Cherchez-vous une tenue pour vous ou quelqu’un d’autre ?",
-      "occasion": "Super ! Commençons. Tout d’abord, est-ce pour une occasion spéciale ?",
-      "price": "Quel est votre budget ?",
-      "me": "Pour moi !",
-      "someone": "Quelqu’un d’autre",
-      "work": "Travail",
-      "dinner": "Dîner",
-      "party": "Fête",
-      "sales": "Parler avec des conseillers de ventes",
-      "shop": "Acheter ce look",
-      "title": "Collection été 2019",
-      "subtitle": "Tenue présentée",
-      "show": "Autre look"
-    },
-    "order": {
-      "prompt": "Nous sommes ravis de pouvoir vous aider. Sélectionnez parmi les éléments suivants",
-      "search": "Rechercher par numéro de commande",
-      "account": "Associer à mon Compte",
-      "dialog": "Fenêtre d’association de compte",
-      "searching": "Recherche de votre dernière commande en cours...",
-      "number": "Bien sûr, veuillez indiquer le numéro de commande",
-      "status": "Votre commande est en route, vous la recevrez d’ici 3 jours."
-    },
-    "care": {
-      "prompt": "Pour vous mettre en relation avec la bonne équipe, veuillez m’indiquer de quoi il s’agit.",
-      "order": "Demandes d’informations sur les commandes",
-      "billing": "Problèmes de facturation",
-      "other": "Autre",
-      "issue": "Salut {{userFirstName}}, je m’appelle {{agentFirstName}}, je suis à votre disposition si vous avez des questions à propos de {{topic}}.",
-      "default": "Salut {{userFirstName}}, je m’appelle {{agentFirstName}}, je suis là pour vous aider aujourd’hui. Comment puis-je vous aider ?",
-      "style": "Salut {{userFirstName}}, je m’appelle {{agentFirstName}} et je suis à votre disposition pour répondre à toute question sur nos styles de l’été",
-      "end": "La démo prend fin ici. Exploitez la puissance de la plate-forme Messenger pour votre entreprise. Regardez https://fb.me/get-sample-oc pour apprendre à construire une expérience semblable",
-      "help": "Aide"
-    },
-    "survey": {
-      "prompt": "Bonjour, je voudrais un rapide retour sur votre récente expérience avec {{agentFirstName}}",
-      "positive": "Nous vous remercions de nous avoir contactés",
-      "neutral": "Merci de nous avoir contactés, n’hésitez pas à nous laisser des commentaires concernant des améliorations à apporter avec #suggestion",
-      "negative": "Merci de nous en avoir fait part. Désolé d’apprendre cela, merci de nous informer s’il y a quoi que ce soit que nous puissions faire pour y remédier",
-      "suggestion": "Votre suggestion a été enregistrée et sera examinée par l’équipe. Si vous souhaitez être recontacté(e) immédiatement, écrivez simplement la mention « aide » en commentaire"
-    },
-    "chat_plugin": {
-      "prompt": "Merci de visiter notre magasin, assurez-vous de vérifier tous les superbes styles que nous avons sur la section été."
-    },
-    "fallback": {
-      "any": "Désolé, mais je ne reconnais pas « {{message}} ».",
-      "attachment": "Merci d’avoir envoyé cette pièce jointe, nous pouvons vous mettre en relation avec un agent pour son examen ou reprendre du début"
-    }
-  }
+	"profile": {
+		"greeting": "Bienvenue sur LCDP Gaming Store {{userFirstName}} ! Achète vite tes Unknown Cash (UC) PUBG Mobile chez nous à des prix très attractifs !"
+	},
+	"menu": {
+		"support": "Service clientèle",
+		"order": "Mises à jour des commandes",
+		"help": "Parler à un agent",
+		"suggestion": "Suggestions vestimentaires",
+		"shop": "Acheter maintenant",
+		"start_over": "Recommencer"
+	},
+	"get_started": {
+		"welcome": "Hello {{userFirstName}}, \nJe suis LCDPシProfesseur {{sunglasses}}, le BOT très spécial de la Team LCDP {{robot_face}}",
+		"introduce": "Je ne sais pas trop jouer à PUBG Mobile, du coup je ne fais que vendre des Unknown Cash (UC) {{dollar}}{{video_game}}"
+	},
+	"leadgen": {
+		"promo": "Salut {{userFirstName}}, trouver de supers tenues est désormais plus facile et plus pratique.",
+		"title": "Coupon de 50 %",
+		"subtitle": "Voici votre coupon",
+		"apply": "Appliquer la remise",
+		"coupon": "Votre coupon a été ajouté à la conversation, vous pouvez maintenant découvrir la collection été soldée"
+	},
+	"curation": {
+		"prompt": "Cherchez-vous une tenue pour vous ou quelqu’un d’autre ?",
+		"occasion": "Super ! Commençons. Tout d’abord, est-ce pour une occasion spéciale ?",
+		"price": "Quel est votre budget ?",
+		"me": "Pour moi !",
+		"someone": "Quelqu’un d’autre",
+		"work": "Travail",
+		"dinner": "Dîner",
+		"party": "Fête",
+		"sales": "Parler avec des conseillers de ventes",
+		"shop": "Acheter ce look",
+		"title": "Collection été 2019",
+		"subtitle": "Tenue présentée",
+		"show": "Autre look"
+	},
+	"order": {
+		"want_to_buy": "Veux-tu acheter des UC ? {{shopping_trolley}}",
+    "want_to_buy_uc_no": "Parfait ! Tu pourras toujours appuyer sur le menu en bas à droite si jamais tu changes d’avis.",
+		"show_pricing": "{{label}} Ci-dessous nos tarifs : \n\n{{white_check_mark}} 63 UC ⬄ 4 000 Ar \n{{white_check_mark}} 340 UC ⬄ 21 500 Ar \n{{white_check_mark}} 690 UC ⬄ 41 000 Ar \n{{white_check_mark}} 1875 UC ⬄ 98 000 Ar \n{{white_check_mark}} 4000 UC ⬄ 193 000 Ar \n{{white_check_mark}} 8400 UC ⬄ 385 000 Ar",
+		"select_amount": "Combien d'UC souhaites-tu acheter ?",
+		"ask_player_id": "Parfait! Donne-moi juste ton ID pour que je puisses t'envoyer les {{amount}} UC directement sur ton compte.",
+		"player_id_hint": "Envoie le en texte clair (pas de capture d’écran si possible s’il te plaît)",
+		"player_id_confirmation": "Tu confirmes que {{id}} est bien ton ID sur PUBG Mobile ?",
+		"player_id_confirmation_multiple": "Peux-tu m'indiquer lequel est ton ID sur PUBG Mobile ?",
+		"player_ign_confirmation": "Tu confirmes que {{pseudo}} ({{id}}) est bien ton pseudo sur PUBG Mobile ?",
+		"player_id_not_found_on_image": "Désolé, je n'arrive pas à trouver ton ID sur la photo. Peux-tu m'envoyer une autre un peu plus clair ou m'envoyer carrément ton ID en texte clair stp ?",
+    "player_id_not_found_on_text": "Désolé, je n'arrive pas à trouver un ID valide sur ton message. Peux-tu réenvoyer stp ?",
+    "player_id_not_found_on_server": "Désolé, je n'arrive pas à trouver ton ID {{id}} sur le serveur de PUBG Mobile. Peux-tu vérifier et me réenvoyer le bon ID stp ?",
+		"player_id_check_in_process": "Bien reçu.\nUn instant, je vérifie ton ID... {{hourglass}}",
+    "player_id_error_retry": "Oops! Redonne-moi le bon ID alors...",
+    "ask_transaction_ref": "Une fois la transaction effectuée, envoie-moi juste la référence de la transaction pour finaliser ta commande",
+    "transaction_ref_confirmation": "Tu confirmes que {{trans_ref}} est bien la référence de la transaction ?",
+    "transaction_ref_not_found_on_image": "Désolé, je n'arrive pas à trouver la référence de transaction sur la photo. Peux-tu m'envoyer une autre un peu plus clair ou m'envoyer carrément la référence en texte clair stp ?",
+    "transaction_ref_not_found_on_text": "Désolé, je n'arrive pas à trouver une référence de transaction valide sur ton message. Peux-tu réenvoyer stp ?",
+    "transaction_ref_error_retry": "Oops! Redonne-moi la bonne référence alors...",
+    "ask_payment_method": "Super ! Par quel moyen souhaites-tu payer ta commande ?",
+    "payment_method_hint": "D’accord ! Tu peux envoyer les {{amount}} Ar au {{msisdn}} ({{firstname}})",
+    "order_in_process": "Merci {{user_first_name}}. \nTa commande est actuellement en cours de traitement... {{hourglass}}",
+    "order_done_congrats": "Félicitations {{user_first_name}} ! Votre compte PUBG Mobile a bien été crédité de {{amount}} UC. \nLCDP Gaming Store vous remercie de votre confiance.",
+    "order_declined_transaction_ref_not_found": "Désolé, je n’ai pas encore pu vérifier ton paiement. Merci de me confirmer la référence de transaction stp.",
+		"status": "Votre commande est en route, vous la recevrez d’ici 3 jours."
+	},
+	"care": {
+		"prompt": "Pour vous mettre en relation avec la bonne équipe, veuillez m’indiquer de quoi il s’agit.",
+		"order": "Demandes d’informations sur les commandes",
+		"billing": "Problèmes de facturation",
+		"other": "Autre",
+		"issue": "Salut {{userFirstName}}, je m’appelle {{agentFirstName}}, je suis à votre disposition si vous avez des questions à propos de {{topic}}.",
+		"default": "Salut {{userFirstName}}, je m’appelle {{agentFirstName}}, je suis là pour vous aider aujourd’hui. Comment puis-je vous aider ?",
+		"style": "Salut {{userFirstName}}, je m’appelle {{agentFirstName}} et je suis à votre disposition pour répondre à toute question sur nos styles de l’été",
+		"end": "La démo prend fin ici. Exploitez la puissance de la plate-forme Messenger pour votre entreprise. Regardez https://fb.me/get-sample-oc pour apprendre à construire une expérience semblable",
+		"help": "Aide"
+	},
+	"survey": {
+		"prompt": "Bonjour, je voudrais un rapide retour sur votre récente expérience avec {{agentFirstName}}",
+		"positive": "Nous vous remercions de nous avoir contactés",
+		"neutral": "Merci de nous avoir contactés, n’hésitez pas à nous laisser des commentaires concernant des améliorations à apporter avec #suggestion",
+		"negative": "Merci de nous en avoir fait part. Désolé d’apprendre cela, merci de nous informer s’il y a quoi que ce soit que nous puissions faire pour y remédier",
+		"suggestion": "Votre suggestion a été enregistrée et sera examinée par l’équipe. Si vous souhaitez être recontacté(e) immédiatement, écrivez simplement la mention « aide » en commentaire"
+	},
+	"chat_plugin": {
+		"prompt": "Merci de visiter notre magasin, assurez-vous de vérifier tous les superbes styles que nous avons sur la section été."
+	},
+	"fallback": {
+		"any": "Désolé, mais je ne reconnais pas encore « {{message}} ». Souhaites-tu parler à un membre de la team ?",
+		"attachment": "Merci d’avoir envoyé cette pièce jointe, tu peux toujours appuyer sur le menu en bas à droite pour discuter avec un membre de la team ou encore effectuer une autre opération"
+	},
+	"player_id_check_in_process": "player_id_check_in_process"
+}
