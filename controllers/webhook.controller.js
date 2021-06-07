@@ -664,10 +664,10 @@ function handlePostback(senderProfile, receivedPostback) {
       initOrder(senderProfile);
       break;
 
-      case 'want_to_buy_uc_no':
-        msg_want_to_buy_uc_no = Response.genText(i18n.__("order.want_to_buy_uc_no"));
-        callSendAPI(senderProfile.id, msg_want_to_buy_uc_no);
-        break;
+    case 'want_to_buy_uc_no':
+      msg_want_to_buy_uc_no = Response.genText(i18n.__("order.want_to_buy_uc_no"));
+      callSendAPI(senderProfile.id, msg_want_to_buy_uc_no);
+      break;
 
     case 'confirm_player_id_yes':
       let msg_player_id_check_in_process = Response.genText(i18n.__("order.player_id_check_in_process", {
@@ -748,6 +748,11 @@ function handlePostback(senderProfile, receivedPostback) {
       let msg_live_chat_activated = Response.genText(i18n.__("care.live_chat_activated"));
       callSendAPI(senderProfile.id, msg_live_chat_activated);
       activateLiveChat(senderProfile);
+      break;
+
+    case 'talk_to_agent_no':
+      let msg_talk_to_agent_no = Response.genText(i18n.__("care.talk_to_agent_no"));
+      callSendAPI(senderProfile.id, msg_talk_to_agent_no);
       break;
 
     case 'view_wiki_pubg_mobile':

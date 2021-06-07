@@ -65,6 +65,7 @@
 	},
 	"care": {
 		"live_chat_activated": "C'est noté ! Un membre de la Team te répondra dans les plus brefs délais. \nPour revenir vers moi, tu peux juste appuyer sur le bouton « Acheter des UC » du menu en bas à droite.",
+		"talk_to_agent_no": "Parfait ! Tu pourras toujours appuyer sur le menu en bas à droite si jamais tu changes d’avis.",
 		"prompt": "Pour vous mettre en relation avec la bonne équipe, veuillez m’indiquer de quoi il s’agit.",
 		"order": "Demandes d’informations sur les commandes",
 		"billing": "Problèmes de facturation",
