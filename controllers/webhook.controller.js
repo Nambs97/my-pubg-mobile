@@ -5,12 +5,14 @@ const Response = require('../services/response.service');
 const { createWorker } = require('tesseract.js');
 const convertapi = require('convertapi')('XNYDYqBwgvepJBTY');
 const PUBGm = require('../controllers/pubgm.controller');
+const { genText } = require('../services/response.service');
 require('dotenv').config();
 
 console.log('Made with ' + emo.heart + 'by LCDP Team');
 
 // Update the Messenger Profile
 setMessengerProfile();
+
 // Setting Global Variables
 let waiting_for_player_id = {};
 let waiting_for_transaction_ref = {};
@@ -58,7 +60,7 @@ function callSendAPI(senderPsid, response, timeTyping) {
   console.log('Start sending HTTPS Request to https://' + options.hostname + options.path);
   setTimeout(function() {
     axios
-    .post('https://graph.facebook.com/v10.0/me/messages?access_token=' + PAGE_ACCESS_TOKEN,
+    .post('https://' + options.hostname + options.path,
     requestBody).then((res)=> {
       console.log("REQUEST SENT ====> " + JSON.stringify(requestBody));
       console.log('Message sent!');
@@ -70,7 +72,78 @@ function callSendAPI(senderPsid, response, timeTyping) {
   }, timeTyping);
 }
 
-// Sends response messages via the Send API
+// Activate Bot automatic Reply via Take Thread Control API
+function activateBotReply(senderProfile) {
+  const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+
+  const options = {
+      hostname: 'graph.facebook.com',
+      port: 443,
+      path: '/v10.0/me/take_thread_control?access_token=' + PAGE_ACCESS_TOKEN,
+      method: 'POST'
+  }
+
+  // Construct the message body
+  let requestBody = {
+    "recipient": {
+      "id": senderProfile.id
+    },
+    "metadata": "Thread has been passed to LCDP Gaming Store Bot" 
+  };
+
+  // Send the HTTP request to the Messenger Platform
+  console.log('Start sending HTTPS Request to https://' + options.hostname + options.path);
+  axios
+  .post('https://' + options.hostname + options.path,
+  requestBody).then((res)=> {
+    console.log("REQUEST SENT ====> " + JSON.stringify(requestBody));
+    console.log("LCDP Gaming Store's Bot successfully activated!");
+  })
+  .catch(err => {
+    console.log("REQUEST SENT ====> " + JSON.stringify(requestBody));
+    console.error("Unable to activate LCDP Gaming Store's Bot:" + err);
+  });
+}
+
+
+// Turn off Bot automatic Reply and Switch to Live Chat via Pass Thread Control API
+function activateLiveChat(senderProfile) {
+  const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+  const PAGE_INBOX_ID = process.env.PAGE_INBOX_ID;
+
+  const options = {
+      hostname: 'graph.facebook.com',
+      port: 443,
+      path: '/v10.0/me/pass_thread_control?access_token=' + PAGE_ACCESS_TOKEN,
+      method: 'POST'
+  }
+
+  // Construct the message body
+  let requestBody = {
+    "recipient": {
+      "id": senderProfile.id
+    },
+    "target_app_id": PAGE_INBOX_ID,
+    "metadata": "Thread has been passed to Page Inbox" 
+  };
+
+  // Send the HTTP request to the Messenger Platform
+  console.log('Start sending HTTPS Request to https://' + options.hostname + options.path);
+  axios
+  .post('https://' + options.hostname + options.path,
+  requestBody).then((res)=> {
+    console.log("REQUEST SENT ====> " + JSON.stringify(requestBody));
+    callClickSendSMSAPIForLiveChat(senderProfile);
+    console.log("Live Chat with Page Inbox successfully activated!");
+  })
+  .catch(err => {
+    console.log("REQUEST SENT ====> " + JSON.stringify(requestBody));
+    console.error("Unable to activate Live Chat with Page Inbox:" + err);
+  });
+}
+
+
+// Sends SMS Notification for Order Treatment
 function callClickSendSMSAPI(senderProfile, orderDetails) {
   /*orderDetails = {
     order_id: 12345,
@@ -124,7 +197,53 @@ function callClickSendSMSAPI(senderProfile, orderDetails) {
   })
   .catch(err => {
     console.log("REQUEST SENT ====> " + JSON.stringify(requestBody));
-    console.error('Unable to send message:' + err);
+    console.error('Unable to send SMS:' + err);
+  });
+}
+
+// Sends SMS Notification for Order Treatment
+function callClickSendSMSAPIForLiveChat(senderProfile) {
+  // The page access token we have generated in your app settings
+  const CLICK_SEND_AUTH = process.env.CLICK_SEND_AUTH;
+  const CLICK_SEND_RECEIVER = process.env.CLICK_SEND_RECEIVER;
+  const CLICK_SEND_SENDER = process.env.CLICK_SEND_SENDER;
+  const options = {
+    hostname: 'rest.clicksend.com',
+    port: 443,
+    path: '/v3/sms/send',
+    method: 'POST'
+  }
+
+  // Construct the message body
+  let requestBody = {
+    "messages": [
+      {
+        "from": CLICK_SEND_SENDER,
+        "to": CLICK_SEND_RECEIVER,
+        "source": "messenger",
+        "body": "LIVE CHAT : L utilisateur " + senderProfile.first_name + " souhaite discuter avec un membre de la Team. Rejoins-le vite sur Messenger."
+      }
+    ]
+  };
+
+  const requestHeader = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Basic ' + CLICK_SEND_AUTH
+  }
+
+  // Send the HTTP request to the Messenger Platform
+  console.log('Start sending HTTPS Request to https://' + options.hostname + options.path);
+  axios
+  .post('https://' + options.hostname + options.path,
+  requestBody, {
+    headers: requestHeader
+  }).then((res)=> {
+    console.log("REQUEST SENT ====> " + JSON.stringify(requestBody));
+    console.log('Live Chat SMS Notification sent!');
+  })
+  .catch(err => {
+    console.log("REQUEST SENT ====> " + JSON.stringify(requestBody));
+    console.error('Unable to send SMS:' + err);
   });
 }
 
@@ -247,12 +366,12 @@ function sendPlayerIGN(senderProfile, playerID) {
           [
             {
               'type': 'postback',
-              'title': 'Oui',
+              'title': emo.heavy_check_mark + ' Oui',
               'payload': 'confirm_player_ign_yes',
             },
             {
               'type': 'postback',
-              'title': 'Non',
+              'title': emo.x + ' Non',
               'payload': 'confirm_player_ign_no',
             }
         ]);
@@ -378,7 +497,7 @@ function handleMessage(senderProfile, receivedMessage) {
             isPlayerIdOk[senderProfile.id] = true;
             response = {
               'text': i18n.__("order.player_id_check_in_process", {
-                hourglass: emo.hourglass
+                hourglass_flowing_sand: emo.hourglass_flowing_sand
               }) 
             };
             globalPlayerID[senderProfile.id] = playerIdArray[0];
@@ -398,7 +517,7 @@ function handleMessage(senderProfile, receivedMessage) {
             response = {
               'text': i18n.__("order.order_in_process", {
                 user_first_name: senderProfile.first_name.replace("'", " "),
-                hourglass: emo.hourglass
+                hourglass_flowing_sand: emo.hourglass_flowing_sand
               }) 
             };
           } else {
@@ -408,25 +527,40 @@ function handleMessage(senderProfile, receivedMessage) {
             };
           }
         } else {
-          response = {
-            'text': i18n.__("fallback.any", {
+          response = Response.genButtonTemplate(
+            i18n.__("fallback.any", {
               message: (receivedMessage.text).replace("'", " ")
-            })
-          };
+            }),
+            [
+              {
+                'type': 'postback',
+                'title': emo.heavy_check_mark + ' Oui',
+                'payload': 'talk_to_agent_yes',
+              },
+              {
+                'type': 'postback',
+                'title': emo.x + ' Non',
+                'payload': 'talk_to_agent_no',
+              }
+            ]);
         }
 
         // Send the response message
         callSendAPI(senderProfile.id, response);
-        if(isPlayerIdOk[senderProfile.id]) {
-          waiting_for_player_id[senderProfile.id] = false;
-        } else if(!isPlayerIdOk[senderProfile.id]) {
-          waiting_for_player_id[senderProfile.id] = true;
+        if (waiting_for_player_id[senderProfile.id]) {
+          if(isPlayerIdOk[senderProfile.id]) {
+            waiting_for_player_id[senderProfile.id] = false;
+          } else if(!isPlayerIdOk[senderProfile.id]) {
+            waiting_for_player_id[senderProfile.id] = true;
+          }
         }
 
-        if (isTransactionRefOk[senderProfile.id]) {
-          waiting_for_transaction_ref[senderProfile.id] = false;
-        } else if (!isTransactionRefOk[senderProfile.id]) {
-          waiting_for_transaction_ref[senderProfile.id] = true;
+        if (waiting_for_transaction_ref[senderProfile.id]) {
+          if (isTransactionRefOk[senderProfile.id]) {
+            waiting_for_transaction_ref[senderProfile.id] = false;
+          } else if (!isTransactionRefOk[senderProfile.id]) {
+            waiting_for_transaction_ref[senderProfile.id] = true;
+          }
         }
       }
       
@@ -450,12 +584,12 @@ function handleMessage(senderProfile, receivedMessage) {
               [
                 {
                   'type': 'postback',
-                  'title': 'Oui',
+                  'title': emo.heavy_check_mark + ' Oui',
                   'payload': 'confirm_player_id_yes',
                 },
                 {
                   'type': 'postback',
-                  'title': 'Non',
+                  'title': emo.x + ' Non',
                   'payload': 'confirm_player_id_no',
                 }
             ]);
@@ -489,12 +623,12 @@ function handleMessage(senderProfile, receivedMessage) {
               [
                 {
                   'type': 'postback',
-                  'title': 'Oui',
+                  'title': emo.heavy_check_mark + ' Oui',
                   'payload': 'confirm_transaction_ref_yes',
                 },
                 {
                   'type': 'postback',
-                  'title': 'Non',
+                  'title': emo.x + ' Non',
                   'payload': 'confirm_transaction_ref_no',
                 }
             ]);
@@ -526,6 +660,7 @@ function handlePostback(senderProfile, receivedPostback) {
   switch (payload) {
     case 'want_to_buy_uc_yes':
       //response = { 'text': 'Voici les tarifs des UC :' };
+      activateBotReply(senderProfile);
       initOrder(senderProfile);
       break;
 
@@ -536,7 +671,7 @@ function handlePostback(senderProfile, receivedPostback) {
 
     case 'confirm_player_id_yes':
       let msg_player_id_check_in_process = Response.genText(i18n.__("order.player_id_check_in_process", {
-        hourglass: emo.hourglass
+        hourglass_flowing_sand: emo.hourglass_flowing_sand
       })); 
       callSendAPI(senderProfile.id, msg_player_id_check_in_process);
       sendPlayerIGN(senderProfile, globalPlayerID[senderProfile.id]);
@@ -596,7 +731,7 @@ function handlePostback(senderProfile, receivedPostback) {
     case 'confirm_transaction_ref_yes':
       let msg_order_in_process = Response.genText(i18n.__("order.order_in_process", {
         user_first_name: senderProfile.first_name.replace("'", " "),
-        hourglass: emo.hourglass
+        hourglass_flowing_sand: emo.hourglass_flowing_sand
       }));
       createOrder(senderProfile);
       callSendAPI(senderProfile.id, msg_order_in_process);
@@ -607,6 +742,12 @@ function handlePostback(senderProfile, receivedPostback) {
       let msg_transaction_ref_error_retry = Response.genText(i18n.__("order.transaction_ref_error_retry")); 
       callSendAPI(senderProfile.id, msg_transaction_ref_error_retry);
       waiting_for_transaction_ref[senderProfile.id] = true;
+      break;
+
+    case 'talk_to_agent_yes':
+      let msg_live_chat_activated = Response.genText(i18n.__("care.live_chat_activated"));
+      callSendAPI(senderProfile.id, msg_live_chat_activated);
+      activateLiveChat(senderProfile);
       break;
 
     case 'view_wiki_pubg_mobile':
@@ -635,7 +776,22 @@ function handlePostback(senderProfile, receivedPostback) {
       break;
 
     default:
-      response = { 'text': 'Oops, je ne comprends pas très bien ta demande. \nSouhaites-tu parler à un membre de la Team ?' };
+      response = Response.genButtonTemplate(
+        i18n.__("fallback.any", {
+          message: (receivedPostback.title).replace("'", " ")
+        }),
+        [
+          {
+            'type': 'postback',
+            'title': emo.heavy_check_mark + ' Oui',
+            'payload': 'talk_to_agent_yes',
+          },
+          {
+            'type': 'postback',
+            'title': emo.x + ' Non',
+            'payload': 'talk_to_agent_no',
+          }
+        ]);;
       // Send the message to acknowledge the postback
       callSendAPI(senderProfile.id, response);
       waiting_for_player_id[senderProfile.id] = false;
@@ -669,12 +825,12 @@ function startConversation(senderProfile) {
     [
       {
         'type': 'postback',
-        'title': 'Oui',
+        'title': emo.heavy_check_mark + ' Oui',
         'payload': 'want_to_buy_uc_yes',
       },
       {
         'type': 'postback',
-        'title': 'Non',
+        'title': emo.x + ' Non',
         'payload': 'want_to_buy_uc_no',
       }
     ]);
@@ -1004,7 +1160,8 @@ function sendPaymentMethodHint(senderProfile, payment_method, amount) {
   callSendAPI(senderProfile.id, msg_payment_method_hint, 1000);
   if (isAmountOK && isPaymentMethodOK) {
     setTimeout(function(){
-      callSendAPI(senderProfile.id, msg_ask_transaction_ref, 3000); 
+      callSendAPI(senderProfile.id, msg_ask_transaction_ref, 3000);
+      waiting_for_transaction_ref[senderProfile.id] = true;
     },2000);
   }
 }
@@ -1078,6 +1235,52 @@ function createOrder(senderProfile) {
 
   callClickSendSMSAPI(senderProfile, orderDetails)
 }
+
+function confirmOrder(senderProfile, orderDetails) {
+  /*orderDetails = {
+    order_id: 12345,
+    product_name: "UC",
+    product_desc: "PUBG Mobile Unknown Cash (Global)",
+    product_quantity: 60,
+    player_id: 563361811,
+    player_ign: LCDPシRio,
+    trans_ref: 555270421,
+    payment_method: MVola,
+    total_price: 20000
+  }*/
+  msg_order_done_congrats = Response.genText(i18n.__("order.order_done_congrats", {
+    user_first_name: senderProfile.first_name.replace("'", " "),
+    player_id: orderDetails.player_id,
+    player_ign: orderDetails.player_ign,
+    amount: orderDetails.product_quantity,
+    clap: emo.clap,
+    tada: emo.tada,
+    blush: emo.blush
+  }))
+
+  callSendAPI(senderProfile.id, msg_order_done_congrats, 2000);
+}
+
+function cancelOrder(senderProfile, orderDetails) {
+  /*orderDetails = {
+    order_id: 12345,
+    product_name: "UC",
+    product_desc: "PUBG Mobile Unknown Cash (Global)",
+    product_quantity: 60,
+    player_id: 563361811,
+    player_ign: LCDPシRio,
+    trans_ref: 555270421,
+    payment_method: MVola,
+    total_price: 20000
+  }*/
+  msg_order_declined_transaction_ref_not_found = Response.genText(i18n.__("order.order_declined_transaction_ref_not_found", {
+    trans_ref: orderDetails.trans_ref,
+    slightly_frowning_face: emo.slightly_frowning_face
+  }))
+
+  callSendAPI(senderProfile.id, msg_order_declined_transaction_ref_not_found, 2000);
+  waiting_for_transaction_ref[senderProfile.id] = true;
+}
   
 // Sets Messenger Profile via API
 function setMessengerProfile() {
@@ -1129,13 +1332,13 @@ function togglePersistentMenu(status) {
         "call_to_actions": [
           {
               "type": "postback",
-              "title": "Acheter des UC",
+              "title": emo.dollar + ' Acheter des UC',
               "payload": "want_to_buy_uc_yes"
           },
           {
               "type": "postback",
-              "title": "Parler à un membre de la Team",
-              "payload": "talk_to_member"
+              "title": emo.left_speech_bubble + ' Parler à la Team',
+              "payload": "talk_to_agent_yes"
           }
         ]
       }
@@ -1198,7 +1401,7 @@ function togglePersistentMenuForUser(senderProfile, status) {
           {
               "type": "postback",
               "title": "Parler à un membre de la Team",
-              "payload": "talk_to_member"
+              "payload": "talk_to_agent_yes"
           },
           {
               "type": "postback",
@@ -1248,5 +1451,7 @@ function togglePersistentMenuForUser(senderProfile, status) {
     handleMessage: handleMessage,
     handlePostback: handlePostback,
     startConversation: startConversation,
-    getUserProfile: getUserProfile
+    getUserProfile: getUserProfile,
+    confirmOrder: confirmOrder,
+    cancelOrder: cancelOrder
 };
